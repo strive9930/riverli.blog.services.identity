@@ -1,0 +1,39 @@
+2026-03-24 23:12:49.350 +08:00 [INF]  === 应用程序启动 ===
+2026-03-24 23:12:49.385 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-03-24 23:12:51.803 +08:00 [INF]  应用程序启动成功!
+2026-03-24 23:12:51.939 +08:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5001
+2026-03-24 23:12:51.943 +08:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-03-24 23:12:51.943 +08:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-03-24 23:12:51.943 +08:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api
+2026-03-24 23:13:26.045 +08:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-03-24 23:13:26.112 +08:00 [WRN] LuckyPennySoftware.MediatR.License You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-24 23:13:26.684 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-03-24 23:13:26.812 +08:00 [DBG] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 查询用户列表，页码：1, 每页数量：2147483647, 关键字：无
+2026-03-24 23:13:26.854 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-03-24 23:13:26.855 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-03-24 23:13:26.872 +08:00 [INF] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 成功获取用户列表，总数：3, 返回：3
+2026-03-24 23:14:29.953 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de7a01-c2d4-424f-8d07-7c9334edc7ef"
+2026-03-24 23:14:29.966 +08:00 [INF] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 成功获取用户详情，用户 ID: "08de7a01-c2d4-424f-8d07-7c9334edc7ef"
+2026-03-24 23:14:59.181 +08:00 [DBG] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 查询用户列表，页码：1, 每页数量：10, 关键字：无
+2026-03-24 23:14:59.188 +08:00 [INF] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 成功获取用户列表，总数：3, 返回：3
+2026-03-24 23:15:10.498 +08:00 [DBG] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 查询用户列表，页码：1, 每页数量：10, 关键字：无
+2026-03-24 23:15:10.505 +08:00 [INF] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 成功获取用户列表，总数：3, 返回：3
+2026-03-24 23:15:11.978 +08:00 [DBG] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 查询用户列表，页码：1, 每页数量：10, 关键字：无
+2026-03-24 23:15:11.990 +08:00 [INF] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 成功获取用户列表，总数：3, 返回：3
+2026-03-24 23:15:42.962 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-03-24 23:15:52.008 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de7a01-c2d4-424f-8d07-7c9334edc7ef"
+2026-03-24 23:15:52.011 +08:00 [INF] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 成功获取用户详情，用户 ID: "08de7a01-c2d4-424f-8d07-7c9334edc7ef"
+2026-03-24 23:51:21.612 +08:00 [INF]  === 应用程序启动 ===
+2026-03-24 23:51:21.644 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-03-24 23:51:23.482 +08:00 [INF]  应用程序启动成功!
+2026-03-24 23:51:23.593 +08:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5001
+2026-03-24 23:51:23.597 +08:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-03-24 23:51:23.598 +08:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-03-24 23:51:23.598 +08:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api
+2026-03-24 23:54:18.539 +08:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-03-24 23:54:18.639 +08:00 [WRN] LuckyPennySoftware.MediatR.License You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-03-24 23:54:18.649 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de7a01-c2d4-424f-8d07-7c9334edc7ef"
+2026-03-24 23:54:18.746 +08:00 [INF] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 成功获取用户详情，用户 ID: "08de7a01-c2d4-424f-8d07-7c9334edc7ef"
+2026-03-24 23:54:18.837 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-03-24 23:54:28.078 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de7a01-c2d4-424f-8d07-7c9334edc7ef"
+2026-03-24 23:54:28.083 +08:00 [INF] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 成功获取用户详情，用户 ID: "08de7a01-c2d4-424f-8d07-7c9334edc7ef"

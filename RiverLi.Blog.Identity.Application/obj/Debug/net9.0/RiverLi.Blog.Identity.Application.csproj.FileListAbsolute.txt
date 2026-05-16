@@ -1,0 +1,17 @@
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\bin\Debug\net9.0\RiverLi.Blog.Identity.Application.deps.json
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\bin\Debug\net9.0\RiverLi.Blog.Identity.Application.dll
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\bin\Debug\net9.0\RiverLi.Blog.Identity.Application.pdb
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\bin\Debug\net9.0\RiverLi.Blog.Identity.Domain.dll
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\bin\Debug\net9.0\RiverLi.Blog.Identity.Infrastructure.dll
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\bin\Debug\net9.0\RiverLi.Blog.Identity.Domain.pdb
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\bin\Debug\net9.0\RiverLi.Blog.Identity.Infrastructure.pdb
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\RiverLi.Blog.Identity.Application.csproj.AssemblyReference.cache
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\RiverLi.Blog.Identity.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\RiverLi.Blog.Identity.Application.AssemblyInfoInputs.cache
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\RiverLi.Blog.Identity.Application.AssemblyInfo.cs
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\RiverLi.Blog.Identity.Application.csproj.CoreCompileInputs.cache
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\RiverLi..1DE28035.Up2Date
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\RiverLi.Blog.Identity.Application.dll
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\refint\RiverLi.Blog.Identity.Application.dll
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\RiverLi.Blog.Identity.Application.pdb
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Application\obj\Debug\net9.0\ref\RiverLi.Blog.Identity.Application.dll

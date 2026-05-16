@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.Blog.Identity.Domain", "RiverLi.Blog.Identity.Domain\RiverLi.Blog.Identity.Domain.csproj", "{213CEC45-561E-42C8-8F47-CB5908381D45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.Blog.Identity.Infrastructure", "RiverLi.Blog.Identity.Infrastructure\RiverLi.Blog.Identity.Infrastructure.csproj", "{36C746CC-6BBE-4811-934D-979D1D8E7CE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.Blog.Identity.Application", "RiverLi.Blog.Identity.Application\RiverLi.Blog.Identity.Application.csproj", "{0CA67114-CF41-4561-9555-11213FC735A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.Blog.Identity.Api", "RiverLi.Blog.Services.Identity.Api\RiverLi.Blog.Identity.Api.csproj", "{B3DB7733-6FB9-0A19-8987-CE8DDA2B4B5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.Blog.Infrastructure.Shared", "..\..\riverli.blog.infrastructure.shared\RiverLi.Blog.Infrastructure.Shared\RiverLi.Blog.Infrastructure.Shared.csproj", "{0F2557F6-F173-459F-B333-397FDE48156E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.DDD.Core", "..\..\riverli.-ddd.-core\RiverLi.DDD.Core\RiverLi.DDD.Core.csproj", "{3FFB522B-BEA3-461D-A7FB-43FA49324578}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{213CEC45-561E-42C8-8F47-CB5908381D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213CEC45-561E-42C8-8F47-CB5908381D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213CEC45-561E-42C8-8F47-CB5908381D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213CEC45-561E-42C8-8F47-CB5908381D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C746CC-6BBE-4811-934D-979D1D8E7CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C746CC-6BBE-4811-934D-979D1D8E7CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C746CC-6BBE-4811-934D-979D1D8E7CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C746CC-6BBE-4811-934D-979D1D8E7CE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CA67114-CF41-4561-9555-11213FC735A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA67114-CF41-4561-9555-11213FC735A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA67114-CF41-4561-9555-11213FC735A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA67114-CF41-4561-9555-11213FC735A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3DB7733-6FB9-0A19-8987-CE8DDA2B4B5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3DB7733-6FB9-0A19-8987-CE8DDA2B4B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3DB7733-6FB9-0A19-8987-CE8DDA2B4B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3DB7733-6FB9-0A19-8987-CE8DDA2B4B5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F2557F6-F173-459F-B333-397FDE48156E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F2557F6-F173-459F-B333-397FDE48156E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F2557F6-F173-459F-B333-397FDE48156E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F2557F6-F173-459F-B333-397FDE48156E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FFB522B-BEA3-461D-A7FB-43FA49324578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FFB522B-BEA3-461D-A7FB-43FA49324578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FFB522B-BEA3-461D-A7FB-43FA49324578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FFB522B-BEA3-461D-A7FB-43FA49324578}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36DB4F7D-7AA4-4024-907F-10613361FFEE}
+	EndGlobalSection
+EndGlobal

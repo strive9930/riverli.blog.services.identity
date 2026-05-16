@@ -1,0 +1,12 @@
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\bin\Debug\net9.0\RiverLi.Blog.Identity.Domain.deps.json
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\bin\Debug\net9.0\RiverLi.Blog.Identity.Domain.dll
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\bin\Debug\net9.0\RiverLi.Blog.Identity.Domain.pdb
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\obj\Debug\net9.0\RiverLi.Blog.Identity.Domain.csproj.AssemblyReference.cache
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\obj\Debug\net9.0\RiverLi.Blog.Identity.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\obj\Debug\net9.0\RiverLi.Blog.Identity.Domain.AssemblyInfoInputs.cache
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\obj\Debug\net9.0\RiverLi.Blog.Identity.Domain.AssemblyInfo.cs
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\obj\Debug\net9.0\RiverLi.Blog.Identity.Domain.csproj.CoreCompileInputs.cache
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\obj\Debug\net9.0\RiverLi.Blog.Identity.Domain.dll
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\obj\Debug\net9.0\refint\RiverLi.Blog.Identity.Domain.dll
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\obj\Debug\net9.0\RiverLi.Blog.Identity.Domain.pdb
+D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Identity.Domain\obj\Debug\net9.0\ref\RiverLi.Blog.Identity.Domain.dll

@@ -1,0 +1,1296 @@
+# RiverLi.Blog.Services.Identity — CQRS (MediatR) 项目重构说明文档
+
+> 版本：1.0　　日期：2026-03　　技术栈：.NET 9.0 · MediatR 14 · EF Core · ASP.NET Core Identity
+
+---
+
+## 目录
+
+1. [项目现状分析](#一项目现状分析)
+2. [重构目标与 CQRS 设计原则](#二重构目标与-cqrs-设计原则)
+3. [详细重构步骤](#三详细重构步骤)
+4. [重构后完整项目结构](#四重构后完整项目结构)
+5. [详细重构任务清单](#五详细重构任务清单可作为-pr-checklist)
+6. [CQRS + MediatR 最佳实践补充](#六cqrs--mediatr-最佳实践补充)
+7. [MediatR 注册与 Program.cs 配置](#七mediatr-注册与-programcs-配置)
+8. [命名规范汇总](#八命名规范汇总)
+9. [附录：参考资料](#附录参考资料)
+
+---
+
+## 一、项目现状分析
+
+### 1.1 项目整体架构
+
+该项目是基于 .NET 9.0 的**身份认证微服务（Identity Service）**，整体采用分层架构，已引入 MediatR 进行 CQRS 模式，但存在若干结构不规范的问题需要重构。
+
+当前项目分为以下四个层次：
+
+- **Domain 层**（`RiverLi.Blog.Identity.Domain`）：存放领域实体，包括 `ApplicationUser`、`ApplicationRole`、`Permission`、`Menu`、`FrontendRoute`、`RouteGroup`、`SysRoute`、`UserLoginHistory` 等。
+- **Application 层**（`RiverLi.Blog.Identity.Application`）：存放 CQRS 的 Command、Query、Handler，以及接口定义和 DTO。
+- **Infrastructure 层**（`RiverLi.Blog.Identity.Infrastructure`）：存放 EF Core 的 DbContext、Migration、JWT 服务、配置类等。
+- **API 层**（`RiverLi.Blog.Services.Identity.Api`）：存放 Controller、Seeder、Program.cs 等 Web API 入口。
+
+### 1.2 当前主要问题（核心问题清单）
+
+| 编号 | 问题描述 | 详细说明 |
+|------|----------|----------|
+| P1 | Command/Query 混放 | Application 层所有文件均放在 `Commands` 文件夹下，Query 文件未与 Command 区分，违反 CQRS 命名约定。例如 `PermissionQueries.cs`、`RoleQueries.cs` 与命令文件混在同一目录下。 |
+| P2 | Handler 与 Command/Query 定义混放 | `PermissionCommandHandlers.cs` 中既有命令处理器，又有 `GetSearchPermissionsQueryHandler`、`GetPermissionStatisticsQueryHandler` 等查询处理器，Command 与 Query 的 Handler 未分离。 |
+| P3 | Controller 职责重叠 | `PermissionController`、`PermissionManagementController`、`PermissionAssignmentsController` 三个控制器存在大量功能重叠，职责边界模糊，路由设计不统一（`api/[controller]`、`api/permission-management`、`api/permissions` 等多种风格）。 |
+| P4 | AuthController 职责过重 | `AuthController` 中混杂了登录/注册（Auth）、系统路由管理、角色权限分配、用户信息获取等多种功能，违反单一职责原则。 |
+| P5 | Request DTO 定义位置不规范 | `CreateRoleRequest`、`UpdateRoleRequest`、`BatchAssignPermissionsRequest` 等 Request DTO 直接定义在 Controller 文件末尾，应移至 Application 层的 Command/Query 中。 |
+| P6 | Query/Handler 不完整 | `PermissionManagementController` 中的 `GetPermissionStatisticsQuery`、`SearchPermissionsQuery` 等 Command 定义散乱，对应 Handler 不完整或逻辑在控制器中实现。 |
+| P7 | DemoController 未清理 | Api 层中存在 `FrontendRouteDemoController`、`MenuDemoController` 等演示用控制器，应在生产重构时清理或移至测试项目。 |
+| P8 | 返回类型不一致 | `GetAllUsersQuery` 返回 `PagedResult<UserDto>`，而其他查询返回 `Result<T>`，造成调用端处理方式不统一。 |
+| P9 | Controller 基类继承不统一 | `UserLoginHistoryController` 未继承 `BaseApiController`，直接使用 `Ok()/BadRequest()` 而非统一的 `Success()/Fail()` 方法。 |
+| P10 | 业务逻辑泄露至 Controller | `FrontendRouteController` 中 `BuildRouteTree` 方法直接在控制器中实现，应移至 Application 层的 QueryHandler 中处理。 |
+
+---
+
+## 二、重构目标与 CQRS 设计原则
+
+### 2.1 重构目标
+
+- 严格区分 Command（写操作）与 Query（读操作），目录结构完全遵循 CQRS 规范。
+- 每个 Command/Query 对应一个独立的 Handler 文件，避免多处理器堆叠在一个文件内。
+- Controller 只负责 HTTP 适配（参数绑定、路由、响应格式），业务逻辑全部通过 MediatR 委托给 Handler。
+- Request DTO 随 Command/Query 一起定义在 Application 层，Controller 只引用它们。
+- 统一响应格式，所有 Controller 继承 `BaseApiController`，使用 `Success()/Fail()`。
+- 清理职责重叠的 Controller，合并为职责清晰的单一资源控制器。
+
+### 2.2 CQRS 核心原则
+
+**Command（命令）**：表示改变系统状态的操作（Create/Update/Delete），返回操作结果（成功/失败/新增的 ID），不返回业务数据。
+
+**Query（查询）**：表示读取数据的操作（Get/List/Search），不修改任何状态，返回所需的数据结果。
+
+> 💡 MediatR 中，Command 和 Query 都实现 `IRequest<Result<T>>`，两者技术上没有区别，但通过命名约定和目录结构严格区分语义。
+
+### 2.3 目录结构规范（重构后）
+
+Application 层目录结构按业务领域拆分，每个领域下再分 Commands 和 Queries：
+
+```
+Application/
+├── Users/
+│   ├── Commands/          ← 写操作命令
+│   │   ├── CreateUser/
+│   │   │   ├── CreateUserCommand.cs
+│   │   │   └── CreateUserCommandHandler.cs
+│   │   ├── UpdateUser/
+│   │   └── DeleteUser/
+│   └── Queries/           ← 读操作查询
+│       ├── GetUserById/
+│       │   ├── GetUserByIdQuery.cs
+│       │   └── GetUserByIdQueryHandler.cs
+│       └── GetAllUsers/
+├── Roles/
+│   ├── Commands/
+│   └── Queries/
+├── Permissions/
+│   ├── Commands/
+│   └── Queries/
+├── Menus/
+│   ├── Commands/
+│   └── Queries/
+├── FrontendRoutes/
+│   ├── Commands/
+│   └── Queries/
+└── RouteGroups/
+    ├── Commands/
+    └── Queries/
+```
+
+---
+
+## 三、详细重构步骤
+
+### 步骤 1：重组 Application 层目录结构
+
+首先按照新的规范在 Application 层建立目录，再逐步迁移/重构文件。
+
+1. 在 Application 项目根目录下创建新的顶层目录：`Users`、`Roles`、`Permissions`、`Menus`、`FrontendRoutes`、`RouteGroups`。
+2. 每个目录下创建 `Commands` 和 `Queries` 两个子目录。
+3. 每个 Command 或 Query **独占一个子目录**，目录名即为操作名称（如 `CreateUser`、`GetUserById`）。
+4. 将原有混合文件（如 `PermissionCommands.cs`）中的内容拆分到各自独立目录中。
+
+> ⚠️ 迁移时注意同步更新所有 `using namespace`，确保引用关系不断裂。可先编译查看错误定位遗漏。
+
+---
+
+### 步骤 2：规范 Command 与 Query 定义
+
+每个 Command/Query 文件只定义一个类（record），并附带其 Handler 在同一目录。
+
+#### Command 规范示例：`CreateUserCommand.cs`
+
+```csharp
+using MediatR;
+using RiverLi.DDD.Core.Application.Common.Models;
+
+namespace RiverLi.Blog.Identity.Application.Users.Commands.CreateUser;
+
+/// <summary>
+/// 创建用户命令
+/// Command 规范：
+/// 1. 使用 record 类型（不可变性）
+/// 2. 命名以 Command 结尾
+/// 3. 返回 Result<T>，T 为操作结果（如新建的 ID）
+/// 4. 所有属性必填，使用构造参数注入
+/// </summary>
+public record CreateUserCommand(
+    string Email,
+    string Password,
+    string? NickName = null,
+    string? PhoneNumber = null,
+    bool IsEnabled = true
+) : IRequest<Result<Guid>>;
+```
+
+#### Command Handler 规范示例：`CreateUserCommandHandler.cs`
+
+```csharp
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using RiverLi.Blog.Identity.Domain.Entities;
+using RiverLi.DDD.Core.Application.Common.Models;
+
+namespace RiverLi.Blog.Identity.Application.Users.Commands.CreateUser;
+
+/// <summary>
+/// CreateUserCommand 的处理器
+/// Handler 规范：
+/// 1. 类名 = Command名 + Handler
+/// 2. 实现 IRequestHandler<TRequest, TResponse>
+/// 3. 通过构造函数注入依赖（数据库、服务等）
+/// 4. Handle 方法内只包含业务逻辑，不含 HTTP 逻辑
+/// 5. 所有异常转为 Result.Fail 返回，不向外抛出
+/// </summary>
+public class CreateUserCommandHandler
+    : IRequestHandler<CreateUserCommand, Result<Guid>>
+{
+    private readonly UserManager<ApplicationUser> _userManager;
+
+    public CreateUserCommandHandler(
+        UserManager<ApplicationUser> userManager)
+    {
+        _userManager = userManager;
+    }
+
+    public async Task<Result<Guid>> Handle(
+        CreateUserCommand request,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            // 1. 检查邮箱是否已存在
+            var existing = await _userManager
+                .FindByEmailAsync(request.Email);
+            if (existing != null)
+                return Result<Guid>.FailResult("该邮箱已被注册");
+
+            // 2. 创建用户实体
+            var user = new ApplicationUser
+            {
+                Id = Guid.NewGuid(),
+                Email = request.Email,
+                UserName = request.Email,
+                NickName = request.NickName,
+                PhoneNumber = request.PhoneNumber,
+                IsEnabled = request.IsEnabled,
+                CreateTime = DateTime.UtcNow,
+            };
+
+            // 3. 持久化
+            var result = await _userManager
+                .CreateAsync(user, request.Password);
+            if (!result.Succeeded)
+                return Result<Guid>.FailResult(
+                    string.Join("; ",
+                        result.Errors.Select(e => e.Description)));
+
+            return Result<Guid>.SuccessResult(user.Id, "用户创建成功");
+        }
+        catch (Exception ex)
+        {
+            return Result<Guid>.FailResult(
+                $"创建用户失败：{ex.Message}");
+        }
+    }
+}
+```
+
+#### Query 规范示例：`GetUserByIdQuery.cs`
+
+```csharp
+using MediatR;
+using RiverLi.DDD.Core.Application.Common.Models;
+
+namespace RiverLi.Blog.Identity.Application.Users.Queries.GetUserById;
+
+/// <summary>
+/// 根据 ID 获取用户详情的查询
+/// Query 规范：
+/// 1. 使用 record 类型
+/// 2. 命名以 Query 结尾
+/// 3. 不修改任何状态
+/// 4. 返回 Result<DTO>
+/// </summary>
+public record GetUserByIdQuery(Guid UserId)
+    : IRequest<Result<UserDetailDto>>;
+
+/// <summary>
+/// 用户详情 DTO：与 Domain Entity 解耦，
+/// 只暴露 API 需要的字段
+/// </summary>
+public class UserDetailDto
+{
+    public Guid Id { get; set; }
+    public string UserName { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string? NickName { get; set; }
+    public string? PhoneNumber { get; set; }
+    public bool IsEnabled { get; set; }
+    public DateTime? CreateTime { get; set; }
+    public DateTime? UpdateTime { get; set; }
+    public List<RoleSummaryDto> Roles { get; set; } = new();
+}
+
+public class RoleSummaryDto
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Code { get; set; } = string.Empty;
+}
+```
+
+#### Query Handler 规范示例：`GetUserByIdQueryHandler.cs`
+
+```csharp
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using RiverLi.Blog.Identity.Infrastructure.Data;
+using RiverLi.DDD.Core.Application.Common.Models;
+
+namespace RiverLi.Blog.Identity.Application.Users.Queries.GetUserById;
+
+public class GetUserByIdQueryHandler
+    : IRequestHandler<GetUserByIdQuery, Result<UserDetailDto>>
+{
+    private readonly IdentityServiceDbContext _context;
+
+    public GetUserByIdQueryHandler(IdentityServiceDbContext context)
+        => _context = context;
+
+    public async Task<Result<UserDetailDto>> Handle(
+        GetUserByIdQuery request,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            var user = await _context.Users
+                .AsNoTracking()
+                .Include(u => u.Roles)
+                .FirstOrDefaultAsync(
+                    u => u.Id == request.UserId,
+                    cancellationToken);
+
+            if (user == null)
+                return Result<UserDetailDto>.FailResult("用户不存在");
+
+            var dto = new UserDetailDto
+            {
+                Id = user.Id,
+                UserName = user.UserName ?? string.Empty,
+                Email = user.Email ?? string.Empty,
+                NickName = user.NickName,
+                PhoneNumber = user.PhoneNumber,
+                IsEnabled = user.IsEnabled,
+                CreateTime = user.CreateTime,
+                UpdateTime = user.UpdateTime,
+                Roles = user.Roles.Select(r => new RoleSummaryDto
+                {
+                    Id = r.Id,
+                    Name = r.Name ?? string.Empty,
+                    Code = r.Code
+                }).ToList()
+            };
+
+            return Result<UserDetailDto>.SuccessResult(dto);
+        }
+        catch (Exception ex)
+        {
+            return Result<UserDetailDto>.FailResult(
+                $"获取用户详情失败：{ex.Message}");
+        }
+    }
+}
+```
+
+---
+
+### 步骤 3：重构 Controller 层
+
+**重构原则：Controller 只做 HTTP 适配，不含任何业务逻辑。所有具体处理通过 `_mediator.Send()` 委托给 Handler。**
+
+#### 3.1 职责重叠控制器的合并策略
+
+| 原控制器 | 操作 | 重构后 |
+|----------|------|--------|
+| `AuthController`（混杂多功能） | 拆分 | `AuthController`（仅 Login/Register/Me）+ `SysRoutesController`（路由管理） |
+| `PermissionController` | 合并 | 合并为 `PermissionsController`（单一 REST 资源） |
+| `PermissionManagementController` | 合并 | 合并到 `PermissionsController`，删除重复路由 |
+| `PermissionAssignmentsController` | 保留/精简 | 保留为独立控制器，只负责权限分配操作 |
+| `UserLoginHistoryController` | 修改基类 | 改为继承 `BaseApiController`，统一响应格式 |
+| `DemoControllers/*` | 删除 | 移至测试项目或直接删除 |
+
+#### 3.2 Controller 标准模板：`UsersController`
+
+```csharp
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using RiverLi.Blog.Identity.Application.Users.Commands.CreateUser;
+using RiverLi.Blog.Identity.Application.Users.Commands.UpdateUser;
+using RiverLi.Blog.Identity.Application.Users.Commands.DeleteUser;
+using RiverLi.Blog.Identity.Application.Users.Commands.AssignUserRoles;
+using RiverLi.Blog.Identity.Application.Users.Queries.GetUserById;
+using RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers;
+using RiverLi.Blog.Identity.Application.Users.Queries.GetUserRoles;
+using RiverLi.Blog.Infrastructure.Shared.Controllers;
+
+namespace RiverLi.Blog.Identity.Api.Controllers;
+
+/// <summary>
+/// 用户管理控制器
+/// 职责：HTTP 请求适配，不含业务逻辑
+/// 规范：
+///   - 路由使用 RESTful 风格
+///   - 所有操作通过 _mediator.Send() 委托
+///   - 统一使用 Success()/Fail() 响应
+///   - 不在 Controller 内定义 DTO/Request 类
+/// </summary>
+[ApiController]
+[Route("api/users")]
+public class UsersController : BaseApiController
+{
+    private readonly IMediator _mediator;
+
+    public UsersController(IMediator mediator)
+        => _mediator = mediator;
+
+    // ─── Queries（读操作）────────────────────────
+
+    /// <summary>获取用户列表（分页）</summary>
+    [HttpGet]
+    public async Task<IActionResult> GetUsers(
+        [FromQuery] GetAllUsersQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return result.Success
+            ? Success(result.Data)
+            : Fail(result.Message);
+    }
+
+    /// <summary>根据 ID 获取用户详情</summary>
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetUser(Guid id)
+    {
+        var result = await _mediator.Send(new GetUserByIdQuery(id));
+        return result.Success
+            ? Success(result.Data)
+            : Fail(result.Message);
+    }
+
+    // ─── Commands（写操作）───────────────────────
+
+    /// <summary>创建用户</summary>
+    [HttpPost]
+    public async Task<IActionResult> CreateUser(
+        [FromBody] CreateUserCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result.Success
+            ? Success(new { id = result.Data })
+            : Fail(result.Message);
+    }
+
+    /// <summary>更新用户信息</summary>
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateUser(
+        Guid id,
+        [FromBody] UpdateUserCommand command)
+    {
+        // 确保路由 ID 与 Body 中的 ID 一致
+        var cmd = command with { Id = id };
+        var result = await _mediator.Send(cmd);
+        return result.Success
+            ? Success()
+            : Fail(result.Message);
+    }
+
+    /// <summary>删除用户</summary>
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteUser(Guid id)
+    {
+        var result = await _mediator.Send(
+            new DeleteUserCommand(id));
+        return result.Success
+            ? Success()
+            : Fail(result.Message);
+    }
+
+    /// <summary>获取用户角色列表</summary>
+    [HttpGet("{id:guid}/roles")]
+    public async Task<IActionResult> GetUserRoles(Guid id)
+    {
+        var result = await _mediator.Send(
+            new GetUserRolesQuery(id));
+        return result.Success
+            ? Success(result.Data)
+            : Fail(result.Message);
+    }
+
+    /// <summary>为用户分配角色</summary>
+    [HttpPut("{id:guid}/roles")]
+    public async Task<IActionResult> AssignUserRoles(
+        Guid id,
+        [FromBody] List<Guid> roleIds)
+    {
+        var result = await _mediator.Send(
+            new AssignUserRolesCommand(id, roleIds));
+        return result.Success
+            ? Success()
+            : Fail(result.Message);
+    }
+}
+```
+
+#### 3.3 重构后的 `AuthController`（仅负责身份认证）
+
+```csharp
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using RiverLi.Blog.Identity.Application.Auth.Commands.Login;
+using RiverLi.Blog.Identity.Application.Auth.Commands.Register;
+using RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo;
+using RiverLi.Blog.Infrastructure.Shared.Controllers;
+
+namespace RiverLi.Blog.Identity.Api.Controllers;
+
+/// <summary>
+/// 身份认证控制器
+/// 职责：仅处理 登录 / 注册 / 获取当前用户信息
+/// 路由管理、角色权限分配等功能已移至对应资源控制器
+/// </summary>
+[ApiController]
+[Route("api/auth")]
+public class AuthController : BaseApiController
+{
+    private readonly IMediator _mediator;
+
+    public AuthController(IMediator mediator)
+        => _mediator = mediator;
+
+    /// <summary>用户注册</summary>
+    [HttpPost("register")]
+    public async Task<IActionResult> Register(
+        [FromBody] RegisterCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result.Success
+            ? Success(result.Data)
+            : Fail(result.Message);
+    }
+
+    /// <summary>用户登录</summary>
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(
+        [FromBody] LoginCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result.Success
+            ? Success(result.Data)
+            : Unauthorized(result.Message);
+    }
+
+    /// <summary>获取当前登录用户信息</summary>
+    [HttpGet("me")]
+    public async Task<IActionResult> GetCurrentUser()
+    {
+        var userId = GetCurrentUserId();
+        if (userId == null)
+            return Unauthorized("未登录");
+
+        var result = await _mediator.Send(
+            new GetCurrentUserInfoQuery(userId.Value));
+        return result.Success
+            ? Success(result.Data)
+            : Fail(result.Message);
+    }
+}
+```
+
+#### 3.4 合并后的 `PermissionsController`
+
+```csharp
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using RiverLi.Blog.Identity.Application.Permissions.Commands.CreatePermission;
+using RiverLi.Blog.Identity.Application.Permissions.Commands.UpdatePermission;
+using RiverLi.Blog.Identity.Application.Permissions.Commands.DeletePermission;
+using RiverLi.Blog.Identity.Application.Permissions.Commands.BatchDeletePermissions;
+using RiverLi.Blog.Identity.Application.Permissions.Queries.GetAllPermissions;
+using RiverLi.Blog.Identity.Application.Permissions.Queries.GetPermissionById;
+using RiverLi.Blog.Identity.Application.Permissions.Queries.GetPagedPermissions;
+using RiverLi.Blog.Identity.Application.Permissions.Queries.GetGroupedPermissions;
+using RiverLi.Blog.Identity.Application.Permissions.Queries.GetPermissionStatistics;
+using RiverLi.Blog.Infrastructure.Shared.Controllers;
+
+namespace RiverLi.Blog.Identity.Api.Controllers;
+
+/// <summary>
+/// 权限资源控制器
+/// 合并原 PermissionController + PermissionManagementController
+/// 职责：权限的 CRUD + 分组查询
+/// 权限分配由 PermissionAssignmentsController 负责
+/// </summary>
+[ApiController]
+[Route("api/permissions")]
+public class PermissionsController : BaseApiController
+{
+    private readonly IMediator _mediator;
+
+    public PermissionsController(IMediator mediator)
+        => _mediator = mediator;
+
+    // ─── Queries ─────────────────────────────────
+
+    /// <summary>获取权限列表（支持过滤）</summary>
+    [HttpGet]
+    public async Task<IActionResult> GetPermissions(
+        [FromQuery] GetAllPermissionsQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    /// <summary>分页获取权限列表</summary>
+    [HttpGet("paged")]
+    public async Task<IActionResult> GetPagedPermissions(
+        [FromQuery] GetPagedPermissionsQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    /// <summary>按分组获取权限</summary>
+    [HttpGet("grouped")]
+    public async Task<IActionResult> GetGroupedPermissions(
+        [FromQuery] string? keyword = null)
+    {
+        var result = await _mediator.Send(
+            new GetGroupedPermissionsQuery(keyword));
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    /// <summary>获取权限统计信息</summary>
+    [HttpGet("statistics")]
+    public async Task<IActionResult> GetStatistics()
+    {
+        var result = await _mediator.Send(
+            new GetPermissionStatisticsQuery());
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    /// <summary>根据 ID 获取权限详情</summary>
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetPermission(Guid id)
+    {
+        var result = await _mediator.Send(new GetPermissionByIdQuery(id));
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    // ─── Commands ────────────────────────────────
+
+    /// <summary>创建权限</summary>
+    [HttpPost]
+    public async Task<IActionResult> CreatePermission(
+        [FromBody] CreatePermissionCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    /// <summary>更新权限</summary>
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdatePermission(
+        Guid id, [FromBody] UpdatePermissionCommand command)
+    {
+        var cmd = command with { Id = id };
+        var result = await _mediator.Send(cmd);
+        return result.Success ? Success() : Fail(result.Message);
+    }
+
+    /// <summary>删除权限</summary>
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeletePermission(Guid id)
+    {
+        var result = await _mediator.Send(new DeletePermissionCommand(id));
+        return result.Success ? Success() : Fail(result.Message);
+    }
+
+    /// <summary>批量删除权限</summary>
+    [HttpDelete("batch")]
+    public async Task<IActionResult> BatchDeletePermissions(
+        [FromBody] List<Guid> ids)
+    {
+        var result = await _mediator.Send(
+            new BatchDeletePermissionsCommand(ids));
+        return result.Success ? Success() : Fail(result.Message);
+    }
+}
+```
+
+#### 3.5 重构后的 `RolesController`
+
+```csharp
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using RiverLi.Blog.Identity.Application.Roles.Commands.CreateRole;
+using RiverLi.Blog.Identity.Application.Roles.Commands.UpdateRole;
+using RiverLi.Blog.Identity.Application.Roles.Commands.DeleteRole;
+using RiverLi.Blog.Identity.Application.Roles.Queries.GetAllRoles;
+using RiverLi.Blog.Identity.Application.Roles.Queries.GetRoleById;
+using RiverLi.Blog.Identity.Application.Roles.Queries.GetRolePermissions;
+using RiverLi.Blog.Identity.Application.Roles.Queries.GetRolePermissionStatus;
+using RiverLi.Blog.Infrastructure.Shared.Controllers;
+
+namespace RiverLi.Blog.Identity.Api.Controllers;
+
+[ApiController]
+[Route("api/roles")]
+public class RolesController : BaseApiController
+{
+    private readonly IMediator _mediator;
+
+    public RolesController(IMediator mediator)
+        => _mediator = mediator;
+
+    [HttpGet]
+    public async Task<IActionResult> GetRoles(
+        [FromQuery] GetAllRolesQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetRole(Guid id)
+    {
+        var result = await _mediator.Send(new GetRoleByIdQuery(id));
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateRole(
+        [FromBody] CreateRoleCommand command)
+    {
+        var result = await _mediator.Send(command);
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateRole(
+        Guid id, [FromBody] UpdateRoleCommand command)
+    {
+        var cmd = command with { Id = id };
+        var result = await _mediator.Send(cmd);
+        return result.Success ? Success() : Fail(result.Message);
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteRole(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteRoleCommand(id));
+        return result.Success ? Success() : Fail(result.Message);
+    }
+
+    /// <summary>获取角色的权限列表</summary>
+    [HttpGet("{roleId:guid}/permissions")]
+    public async Task<IActionResult> GetRolePermissions(Guid roleId)
+    {
+        var result = await _mediator.Send(
+            new GetRolePermissionsQuery(roleId));
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+
+    /// <summary>获取角色权限分配状态（已分配 vs 未分配）</summary>
+    [HttpGet("{roleId:guid}/permission-status")]
+    public async Task<IActionResult> GetRolePermissionStatus(Guid roleId)
+    {
+        var result = await _mediator.Send(
+            new GetRolePermissionStatusQuery(roleId));
+        return result.Success ? Success(result.Data) : Fail(result.Message);
+    }
+}
+```
+
+---
+
+### 步骤 4：将业务逻辑从 Controller 移至 QueryHandler
+
+以 `FrontendRouteController` 中树形构建逻辑为例：
+
+#### ❌ 重构前（错误示范）
+
+```csharp
+// Controller 中出现业务逻辑
+[HttpGet("tree")]
+public async Task<IActionResult> GetFrontendRouteTree()
+{
+    var query = new GetAllFrontendRoutesQuery();
+    var result = await _mediator.Send(query);
+    if (!result.Success) return Fail(result.Message);
+
+    var routes = result.Data;
+    var rootRoutes = routes
+        .Where(r => r.ParentId == null)
+        .OrderBy(r => r.Sort).ToList();
+
+    foreach (var root in rootRoutes)
+        BuildRouteTree(root, routes);  // ← 业务逻辑不应在此
+
+    return Success(rootRoutes);
+}
+```
+
+#### ✅ 重构后（正确做法）
+
+**Controller 只做 HTTP 适配：**
+
+```csharp
+[HttpGet("tree")]
+public async Task<IActionResult> GetFrontendRouteTree()
+{
+    var result = await _mediator.Send(
+        new GetFrontendRouteTreeQuery());
+    return result.Success
+        ? Success(result.Data)
+        : Fail(result.Message);
+}
+```
+
+**树形构建逻辑移至 QueryHandler：**
+
+```csharp
+// Application/FrontendRoutes/Queries/GetFrontendRouteTree/
+// GetFrontendRouteTreeQuery.cs
+public record GetFrontendRouteTreeQuery
+    : IRequest<Result<List<FrontendRouteTreeDto>>>;
+
+public class FrontendRouteTreeDto
+{
+    public Guid Id { get; set; }
+    public string Path { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string? Title { get; set; }
+    public int Sort { get; set; }
+    public bool IsEnabled { get; set; }
+    public List<FrontendRouteTreeDto> Children { get; set; } = new();
+}
+
+// GetFrontendRouteTreeQueryHandler.cs
+public class GetFrontendRouteTreeQueryHandler
+    : IRequestHandler<GetFrontendRouteTreeQuery,
+                      Result<List<FrontendRouteTreeDto>>>
+{
+    private readonly IdentityServiceDbContext _context;
+
+    public GetFrontendRouteTreeQueryHandler(
+        IdentityServiceDbContext context)
+        => _context = context;
+
+    public async Task<Result<List<FrontendRouteTreeDto>>>
+        Handle(GetFrontendRouteTreeQuery request,
+               CancellationToken cancellationToken)
+    {
+        var all = await _context.FrontendRoutes
+            .AsNoTracking()
+            .OrderBy(r => r.Sort)
+            .ToListAsync(cancellationToken);
+
+        var roots = all
+            .Where(r => r.ParentId == null)
+            .Select(r => ToDto(r, all))
+            .ToList();
+
+        return Result<List<FrontendRouteTreeDto>>
+            .SuccessResult(roots);
+    }
+
+    private static FrontendRouteTreeDto ToDto(
+        FrontendRoute route,
+        List<FrontendRoute> all)
+    {
+        return new FrontendRouteTreeDto
+        {
+            Id = route.Id,
+            Path = route.Path,
+            Name = route.Name,
+            Title = route.Title,
+            Sort = route.Sort,
+            IsEnabled = route.IsEnabled,
+            Children = all
+                .Where(r => r.ParentId == route.Id)
+                .Select(r => ToDto(r, all))
+                .ToList()
+        };
+    }
+}
+```
+
+---
+
+### 步骤 5：统一响应格式和返回类型
+
+`GetAllUsersQuery` 目前直接返回 `PagedResult<UserDto>`（未包在 `Result<T>` 外层），需要统一：
+
+```csharp
+// 重构前（不一致）
+public record GetAllUsersQuery(...)
+    : IRequest<PagedResult<UserDto>>;  // ❌ 未包在 Result 外层
+
+// 重构后（统一）
+public record GetAllUsersQuery(
+    string? Keyword = null,
+    bool? IsEnabled = null,
+    int PageIndex = 1,
+    int PageSize = 10
+) : IRequest<Result<PagedResult<UserDto>>>;  // ✅ 统一包在 Result 中
+
+// Handler 同步修改返回类型
+public class GetAllUsersQueryHandler
+    : IRequestHandler<GetAllUsersQuery,
+                      Result<PagedResult<UserDto>>>
+{
+    public async Task<Result<PagedResult<UserDto>>>
+        Handle(GetAllUsersQuery request,
+               CancellationToken cancellationToken)
+    {
+        // ...构建分页结果...
+        return Result<PagedResult<UserDto>>.SuccessResult(pagedResult);
+    }
+}
+```
+
+---
+
+### 步骤 6：修复 `UserLoginHistoryController` 基类继承
+
+```csharp
+// 重构前（不统一）
+public class UserLoginHistoryController : ControllerBase  // ❌
+{
+    [HttpGet]
+    public async Task<ActionResult<UserLoginHistoryResult>>
+        GetUserLoginHistory(...)
+    {
+        return Ok(result);  // ❌ 直接使用 Ok()
+    }
+}
+
+// 重构后（统一）
+public class UserLoginHistoryController : BaseApiController  // ✅
+{
+    [HttpGet]
+    public async Task<IActionResult> GetUserLoginHistory(
+        [FromQuery] GetUserLoginHistoryQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return result.Success
+            ? Success(result.Data)
+            : Fail(result.Message);
+    }
+
+    [HttpGet("{userId:guid}/recent")]
+    public async Task<IActionResult> GetRecentHistory(
+        Guid userId,
+        [FromQuery] int count = 10)
+    {
+        var result = await _mediator.Send(
+            new GetUserRecentLoginHistoryQuery(userId, count));
+        return result.Success
+            ? Success(result.Data)
+            : Fail(result.Message);
+    }
+
+    [HttpGet("{userId:guid}/statistics")]
+    public async Task<IActionResult> GetLoginStatistics(Guid userId)
+    {
+        var result = await _mediator.Send(
+            new GetUserLoginStatisticsQuery(userId));
+        return result.Success
+            ? Success(result.Data)
+            : Fail(result.Message);
+    }
+}
+```
+
+---
+
+## 四、重构后完整项目结构
+
+### 4.1 Application 层最终目录结构
+
+```
+Application/
+├── Auth/
+│   ├── Commands/
+│   │   ├── Login/
+│   │   │   ├── LoginCommand.cs
+│   │   │   └── LoginCommandHandler.cs
+│   │   └── Register/
+│   │       ├── RegisterCommand.cs
+│   │       └── RegisterCommandHandler.cs
+│   └── Queries/
+│       └── GetCurrentUserInfo/
+│           ├── GetCurrentUserInfoQuery.cs
+│           └── GetCurrentUserInfoQueryHandler.cs
+├── Users/
+│   ├── Commands/
+│   │   ├── CreateUser/
+│   │   │   ├── CreateUserCommand.cs
+│   │   │   └── CreateUserCommandHandler.cs
+│   │   ├── UpdateUser/
+│   │   │   ├── UpdateUserCommand.cs
+│   │   │   └── UpdateUserCommandHandler.cs
+│   │   ├── DeleteUser/
+│   │   │   ├── DeleteUserCommand.cs
+│   │   │   └── DeleteUserCommandHandler.cs
+│   │   ├── AssignUserRoles/
+│   │   │   ├── AssignUserRolesCommand.cs
+│   │   │   └── AssignUserRolesCommandHandler.cs
+│   │   └── RecordLoginHistory/
+│   │       ├── RecordLoginHistoryCommand.cs
+│   │       └── RecordLoginHistoryCommandHandler.cs
+│   └── Queries/
+│       ├── GetUserById/
+│       │   ├── GetUserByIdQuery.cs
+│       │   ├── GetUserByIdQueryHandler.cs
+│       │   └── UserDetailDto.cs
+│       ├── GetAllUsers/
+│       │   ├── GetAllUsersQuery.cs
+│       │   └── GetAllUsersQueryHandler.cs
+│       ├── GetUserRoles/
+│       ├── GetUserPermissions/
+│       ├── GetUserMenus/
+│       ├── GetUserPermissionCodes/
+│       ├── GetDashboardStats/
+│       └── GetUserLoginHistory/
+├── Roles/
+│   ├── Commands/
+│   │   ├── CreateRole/
+│   │   ├── UpdateRole/
+│   │   └── DeleteRole/
+│   └── Queries/
+│       ├── GetRoleById/
+│       ├── GetAllRoles/
+│       ├── GetRolePermissions/
+│       └── GetRolePermissionStatus/
+├── Permissions/
+│   ├── Commands/
+│   │   ├── CreatePermission/
+│   │   ├── UpdatePermission/
+│   │   ├── DeletePermission/
+│   │   ├── BatchDeletePermissions/
+│   │   ├── BatchUpdatePermissionStatus/
+│   │   ├── AssignPermissionsToRole/
+│   │   ├── AssignPermissionsToUser/
+│   │   ├── ClearRolePermissions/
+│   │   └── BatchAssignPermissions/
+│   └── Queries/
+│       ├── GetAllPermissions/
+│       ├── GetPermissionById/
+│       ├── GetPagedPermissions/
+│       ├── GetGroupedPermissions/
+│       ├── GetRolePermissionStatus/
+│       └── GetPermissionStatistics/
+├── Menus/
+│   ├── Commands/
+│   │   ├── CreateMenu/
+│   │   ├── UpdateMenu/
+│   │   ├── DeleteMenu/
+│   │   ├── CreateMenuGroup/
+│   │   ├── UpdateMenuGroup/
+│   │   └── DeleteMenuGroup/
+│   └── Queries/
+│       ├── GetAllMenus/
+│       ├── GetMenuById/
+│       ├── GetMenuTree/
+│       └── GetAllMenuGroups/
+├── FrontendRoutes/
+│   ├── Commands/
+│   │   ├── CreateFrontendRoute/
+│   │   ├── UpdateFrontendRoute/
+│   │   ├── DeleteFrontendRoute/
+│   │   └── AssociateBackendRoutes/
+│   └── Queries/
+│       ├── GetAllFrontendRoutes/
+│       ├── GetFrontendRouteById/
+│       └── GetFrontendRouteTree/    ← 树形逻辑从 Controller 移至此
+├── RouteGroups/
+│   ├── Commands/
+│   │   ├── CreateRouteGroup/
+│   │   ├── UpdateRouteGroup/
+│   │   └── DeleteRouteGroup/
+│   └── Queries/
+│       ├── GetAllRouteGroups/
+│       ├── GetRouteGroupById/
+│       ├── GetPagedRouteGroups/
+│       └── GetRouteGroupTree/
+└── SysRoutes/
+    ├── Commands/
+    │   └── CreateSysRoute/
+    └── Queries/
+        ├── GetActiveRoutes/
+        └── GetRouteById/
+```
+
+### 4.2 API 层最终 Controller 清单
+
+| Controller 文件 | 路由前缀 | 职责说明 |
+|-----------------|----------|----------|
+| `AuthController` | `api/auth` | 登录、注册、获取当前用户信息 |
+| `UsersController` | `api/users` | 用户 CRUD、用户角色/权限分配 |
+| `RolesController` | `api/roles` | 角色 CRUD、角色权限分配 |
+| `PermissionsController` | `api/permissions` | 权限 CRUD、分页、分组查询（合并自两个控制器） |
+| `PermissionAssignmentsController` | `api/permission-assignments` | 权限分配操作（支持角色/用户双维度） |
+| `MenusController` | `api/menus` | 菜单 CRUD、菜单组管理、菜单树查询 |
+| `FrontendRoutesController` | `api/frontend-routes` | 前端路由 CRUD、树形查询、后端路由关联 |
+| `RouteGroupsController` | `api/route-groups` | 路由分组 CRUD、分页、树形查询 |
+| `SysRoutesController` | `api/sys-routes` | 系统路由管理（从 AuthController 拆出） |
+| `UserFrontendController` | `api/user-frontend` | 前端用户数据（菜单、权限码、角色） |
+| `UserLoginHistoryController` | `api/user-login-history` | 登录历史查询、统计（已改为继承 BaseApiController） |
+
+---
+
+## 五、详细重构任务清单（可作为 PR Checklist）
+
+### Application 层任务
+
+- [ ] 创建新目录结构（`Auth/Users/Roles/Permissions/Menus/FrontendRoutes/RouteGroups/SysRoutes`）
+- [ ] 将 `LoginCommand.cs`、`LoginHandler.cs` 移至 `Auth/Commands/Login/`
+- [ ] 将 `RegisterCommand.cs`、`RegisterHandler.cs` 移至 `Auth/Commands/Register/`
+- [ ] 将 `GetCurrentUserInfoQuery.cs`、Handler 移至 `Auth/Queries/GetCurrentUserInfo/`
+- [ ] 拆分 `UserManagementCommands.cs` → 独立目录，每个 Command/Query 一个目录
+- [ ] 拆分 `PermissionCommands.cs` → `Permissions/Commands/` 和 `Permissions/Queries/` 下独立目录
+- [ ] 拆分 `RoleCommands.cs` / `RoleQueries.cs` → `Roles/Commands/` 和 `Roles/Queries/` 下独立目录
+- [ ] 拆分 `MenuCommands.cs` → `Menus/Commands/` 和 `Menus/Queries/` 下独立目录
+- [ ] 拆分 `FrontendRouteCommands.cs` → `FrontendRoutes/Commands/` 和 `FrontendRoutes/Queries/` 下独立目录
+- [ ] 将 FrontendRoute 树形构建逻辑从 Controller 迁移到 `GetFrontendRouteTreeQueryHandler`
+- [ ] 拆分 `RouteGroupCommands.cs` → `RouteGroups/Commands/` 和 `RouteGroups/Queries/` 下独立目录
+- [ ] `GetAllUsersQuery` 返回类型改为 `Result<PagedResult<UserDto>>`
+- [ ] 将 `CreateRoleRequest`/`UpdateRoleRequest` 等 Request DTO 移至对应 Command 文件中
+- [ ] 删除 `PermissionQueries.cs`（内容拆分至各独立目录）
+- [ ] 删除 `PermissionGroupHandlers.cs`（按实际功能拆分）
+- [ ] 补全 `GetPermissionStatisticsQueryHandler` 实现
+- [ ] 补全 `SearchPermissionsQueryHandler` 实现
+
+### API 层任务
+
+- [ ] 重构 `AuthController`：移除路由管理、角色分配等功能，只保留登录/注册/当前用户
+- [ ] 新增 `SysRoutesController` 承接从 `AuthController` 拆出的路由管理功能
+- [ ] 合并 `PermissionController` + `PermissionManagementController` 为 `PermissionsController`
+- [ ] 将 `RoleManagementController` 重命名为 `RolesController`（保持 `api/roles` 路由不变）
+- [ ] 将 `UserManagementController` 重命名为 `UsersController`
+- [ ] 将 `MenuManagementController` 重命名为 `MenusController`
+- [ ] 将 `FrontendRouteController` 重命名为 `FrontendRoutesController`，移除 `BuildRouteTree` 方法
+- [ ] 将 `RouteGroupController` 重命名为 `RouteGroupsController`
+- [ ] 修改 `UserLoginHistoryController` 继承 `BaseApiController`，使用 `Success()/Fail()`
+- [ ] 删除 `DemoControllers/` 目录下所有演示控制器
+- [ ] 统一路由命名风格：`[controller]` 改为小写复数形式
+- [ ] 为所有管理类 Controller 添加 `[Authorize]` 特性（`AuthController` 的 `login/register` 除外）
+- [ ] 移除 Controller 中所有 `GetPermissionStatistics`、`AssignRolePermissions` 等内嵌 Mock 数据
+
+---
+
+## 六、CQRS + MediatR 最佳实践补充
+
+### 6.1 Pipeline Behavior（管道行为）
+
+利用 MediatR 的 Pipeline Behavior 对所有 Command/Query 统一增加横切关注点：
+
+```csharp
+/// <summary>
+/// 全局日志管道行为
+/// 注册方式：
+/// builder.Services.AddTransient(
+///     typeof(IPipelineBehavior<,>),
+///     typeof(LoggingBehavior<,>));
+/// </summary>
+public class LoggingBehavior<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : notnull
+{
+    private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
+
+    public LoggingBehavior(
+        ILogger<LoggingBehavior<TRequest, TResponse>> logger)
+        => _logger = logger;
+
+    public async Task<TResponse> Handle(
+        TRequest request,
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
+    {
+        var name = typeof(TRequest).Name;
+        _logger.LogInformation("→ Handling {Name}", name);
+        var sw = Stopwatch.StartNew();
+        var response = await next();
+        sw.Stop();
+        _logger.LogInformation(
+            "← Handled {Name} in {Ms}ms",
+            name, sw.ElapsedMilliseconds);
+        return response;
+    }
+}
+```
+
+### 6.2 FluentValidation 集成（可选增强）
+
+```csharp
+// 1. 安装 NuGet 包：FluentValidation.DependencyInjectionExtensions
+
+// 2. 为 Command 定义验证器
+public class CreateUserCommandValidator
+    : AbstractValidator<CreateUserCommand>
+{
+    public CreateUserCommandValidator()
+    {
+        RuleFor(x => x.Email)
+            .NotEmpty().WithMessage("邮箱不能为空")
+            .EmailAddress().WithMessage("邮箱格式不正确");
+
+        RuleFor(x => x.Password)
+            .NotEmpty().WithMessage("密码不能为空")
+            .MinimumLength(6).WithMessage("密码最少 6 位");
+    }
+}
+
+// 3. ValidationBehavior（管道中自动触发验证）
+public class ValidationBehavior<TRequest, TResponse>
+    : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : notnull
+{
+    private readonly IEnumerable<IValidator<TRequest>> _validators;
+
+    public ValidationBehavior(
+        IEnumerable<IValidator<TRequest>> validators)
+        => _validators = validators;
+
+    public async Task<TResponse> Handle(
+        TRequest request,
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
+    {
+        if (_validators.Any())
+        {
+            var context = new ValidationContext<TRequest>(request);
+            var failures = _validators
+                .Select(v => v.Validate(context))
+                .SelectMany(r => r.Errors)
+                .Where(f => f != null)
+                .ToList();
+
+            if (failures.Count != 0)
+                throw new ValidationException(failures);
+        }
+
+        return await next();
+    }
+}
+```
+
+### 6.3 常见错误模式对比
+
+| ❌ 错误做法 | ✅ 正确做法 |
+|-------------|-------------|
+| Controller 内出现 `FindByEmailAsync`、数据库查询等业务逻辑 | 业务逻辑只在 Handler 内；Controller 只 `_mediator.Send(cmd)` |
+| Query 文件放在 `Commands/` 目录下 | Query 文件放在 `Queries/` 目录下，每个 Query 独占子目录 |
+| Request DTO 定义在 Controller 文件末尾 | Request DTO 作为 Command 本身，或在 Command 同目录内定义 |
+| `IRequest<PagedResult<UserDto>>`（未包装） | `IRequest<Result<PagedResult<UserDto>>>`（统一包装） |
+| Controller 继承 `ControllerBase` | Controller 继承 `BaseApiController` |
+| 多个 Handler 堆叠在一个文件内（如 `PermissionCommandHandlers.cs`） | 一个 Handler 一个文件，置于对应 Command/Query 目录中 |
+| `BuildRouteTree` 等树形/聚合逻辑在 Controller 中 | 此类逻辑在 QueryHandler 中完成，Controller 只接收最终结果 |
+| Controller 方法内有大量 `try/catch` 和 `Console.WriteLine` 调试代码 | 异常由 Handler 内部捕获并转为 `Result.Fail`；日志通过 Pipeline Behavior 统一处理 |
+
+---
+
+## 七、MediatR 注册与 Program.cs 配置
+
+```csharp
+// Program.cs
+
+// ── MediatR 注册（扫描 Application 层所有 Handler）──
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(
+        typeof(CreateUserCommandHandler).Assembly);
+
+    // 注册 Pipeline Behaviors（顺序很重要）
+    cfg.AddBehavior(
+        typeof(IPipelineBehavior<,>),
+        typeof(LoggingBehavior<,>));
+
+    // 可选：Validation Behavior（需先安装 FluentValidation）
+    // cfg.AddBehavior(
+    //     typeof(IPipelineBehavior<,>),
+    //     typeof(ValidationBehavior<,>));
+});
+
+// ── FluentValidation 注册（如已引入）──
+builder.Services.AddValidatorsFromAssembly(
+    typeof(CreateUserCommandHandler).Assembly);
+
+// ── Controllers 注册 ──
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler =
+            ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+```
+
+---
+
+## 八、命名规范汇总
+
+| 类型 | 命名规范 | 示例 |
+|------|----------|------|
+| 写操作命令 | `[动词][名词]Command` | `CreateUserCommand`, `DeleteRoleCommand` |
+| 读操作查询 | `Get[名词]Query` / `[动词][名词]Query` | `GetUserByIdQuery`, `GetPagedPermissionsQuery` |
+| 命令处理器 | `[命令名]Handler` | `CreateUserCommandHandler` |
+| 查询处理器 | `[查询名]Handler` | `GetUserByIdQueryHandler` |
+| 数据传输对象 | `[名词]Dto` / `[名词]DetailDto` | `UserDetailDto`, `PermissionDto` |
+| 控制器 | `[资源复数]Controller` | `UsersController`, `PermissionsController` |
+| 路由前缀 | `api/[资源复数小写]` | `api/users`, `api/permissions` |
+| 目录（Command） | `[动词][名词]/` | `CreateUser/`, `UpdateRole/` |
+| 目录（Query） | `Get[名词][By/Paged]/` | `GetUserById/`, `GetPagedPermissions/` |
+
+> 💡 遵循统一的命名规范可以大幅降低团队协作成本，也方便 IDE 全局搜索（如搜索所有 Command 只需搜索 `Command` 后缀）。
+
+---
+
+## 附录：参考资料
+
+- [MediatR 官方文档](https://github.com/jbogard/MediatR)
+- [CQRS 模式介绍 - Azure Architecture](https://docs.microsoft.com/azure/architecture/patterns/cqrs)
+- [Clean Architecture - Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [FluentValidation 官方文档](https://docs.fluentvalidation.net)
+- [ASP.NET Core - Controller Best Practices](https://docs.microsoft.com/aspnet/core/mvc/controllers/actions)
+
+---
+
+*文档结束 · RiverLi.Blog.Services.Identity CQRS 重构说明*

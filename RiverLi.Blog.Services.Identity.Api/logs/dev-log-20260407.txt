@@ -1,0 +1,891 @@
+2026-04-07 22:26:17.089 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:26:17.138 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:26:19.112 +08:00 [ERR] Microsoft.EntityFrameworkCore.Database.Command Failed executing DbCommand (152ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE `MenuGroups` (
+    `Id` char(36) COLLATE ascii_general_ci NOT NULL,
+    `Name` varchar(100) CHARACTER SET utf8mb4 NOT NULL,
+    `Code` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+    `Description` varchar(500) CHARACTER SET utf8mb4 NULL,
+    `Icon` varchar(100) CHARACTER SET utf8mb4 NULL,
+    `Sort` int NOT NULL,
+    `IsEnabled` tinyint(1) NOT NULL,
+    `CreateTime` datetime(6) NULL,
+    `UpdateTime` datetime(6) NULL,
+    CONSTRAINT `PK_MenuGroups` PRIMARY KEY (`Id`)
+) CHARACTER SET=utf8mb4;
+2026-04-07 22:26:19.161 +08:00 [FTL]  应用程序启动失败!
+MySqlConnector.MySqlException (0x80004005): Table 'menugroups' already exists
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 1081
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 131
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 487
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteNonQueryAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 309
+   at MySqlConnector.MySqlCommand.ExecuteNonQuery() in /_/src/MySqlConnector/MySqlCommand.cs:line 108
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteNonQuery(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Migrations.MigrationCommand.ExecuteNonQuery(IRelationalConnection connection, IReadOnlyDictionary`2 parameterValues)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.Execute(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean beginTransaction, Boolean commitTransaction, Nullable`1 isolationLevel)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.<>c.<ExecuteNonQuery>b__3_1(DbContext _, ValueTuple`6 s)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.MigrationCommandExecutor.ExecuteNonQuery(IReadOnlyList`1 migrationCommands, IRelationalConnection connection, MigrationExecutionState executionState, Boolean commitTransaction, Nullable`1 isolationLevel)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.MigrateImplementation(DbContext context, String targetMigration, MigrationExecutionState state, Boolean useTransaction)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.<>c.<Migrate>b__20_1(DbContext c, ValueTuple`4 s)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.Migrate(String targetMigration)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.Migrate(DatabaseFacade databaseFacade)
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 176
+2026-04-07 22:34:46.177 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:35:14.828 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:35:14.848 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:35:14.893 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:35:14.897 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:35:45.103 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:35:45.121 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:35:45.166 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:35:45.169 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:36:22.042 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:36:22.060 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:36:22.106 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:36:22.109 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:36:32.037 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:36:32.055 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:36:32.099 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:36:32.102 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:37:47.613 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:37:47.631 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:37:47.675 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:37:47.678 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:38:45.648 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:38:45.667 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:38:45.713 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:38:45.715 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:41:15.375 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:41:15.393 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:41:15.437 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:41:15.440 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:41:21.457 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:41:21.475 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:41:22.492 +08:00 [ERR] Microsoft.EntityFrameworkCore.Database.Command Failed executing DbCommand (1ms) [Parameters=[@__menuName_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`CreateTime`, `m`.`Creator`, `m`.`DeleteTime`, `m`.`Description`, `m`.`FrontendRouteId`, `m`.`Icon`, `m`.`IsDeleted`, `m`.`IsEnabled`, `m`.`IsVisible`, `m`.`MenuGroupId`, `m`.`MenuType`, `m`.`Meta`, `m`.`Name`, `m`.`ParentId`, `m`.`Path`, `m`.`RequiredPermission`, `m`.`RowVersion`, `m`.`Sort`, `m`.`TargetAudience`, `m`.`Title`, `m`.`UpdateTime`, `m`.`Updator`
+FROM `Menus` AS `m`
+WHERE `m`.`Name` = @__menuName_0
+LIMIT 1
+2026-04-07 22:41:22.503 +08:00 [ERR] Microsoft.EntityFrameworkCore.Query An exception occurred while iterating over the results of a query for context type 'RiverLi.Blog.Identity.Infrastructure.Data.IdentityServiceDbContext'.
+MySqlConnector.MySqlException (0x80004005): Unknown column 'm.TargetAudience' in 'field list'
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 1081
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 131
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 487
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+MySqlConnector.MySqlException (0x80004005): Unknown column 'm.TargetAudience' in 'field list'
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 1081
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 131
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 487
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-04-07 22:41:22.504 +08:00 [FTL]  应用程序启动失败!
+MySqlConnector.MySqlException (0x80004005): Unknown column 'm.TargetAudience' in 'field list'
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 1081
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 131
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 487
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at RiverLi.Blog.Identity.Api.MenuSeedData.EnsureMenuSeedData(IServiceProvider serviceProvider) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\MenuSeedData.cs:line 28
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 216
+2026-04-07 22:41:22.506 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:41:42.104 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:41:42.121 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:41:42.164 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:41:42.167 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:41:48.747 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:41:48.764 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:41:48.807 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:41:48.810 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:42:08.081 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:42:08.098 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:42:08.141 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:42:08.143 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:42:43.435 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:42:43.453 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:42:43.501 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:42:43.504 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:42:49.389 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:42:49.408 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:42:50.197 +08:00 [ERR] Microsoft.EntityFrameworkCore.Database.Command Failed executing DbCommand (16ms) [Parameters=[@__normalizedName_0='?' (Size = 256)], CommandType='"Text"', CommandTimeout='30']
+SELECT `r`.`Id`, `r`.`Code`, `r`.`ConcurrencyStamp`, `r`.`CreateTime`, `r`.`Description`, `r`.`IsEnabled`, `r`.`Name`, `r`.`NormalizedName`, `r`.`ParentRoleId`, `r`.`UpdateTime`
+FROM `Roles` AS `r`
+WHERE `r`.`NormalizedName` = @__normalizedName_0
+LIMIT 1
+2026-04-07 22:42:50.206 +08:00 [ERR] Microsoft.EntityFrameworkCore.Query An exception occurred while iterating over the results of a query for context type 'RiverLi.Blog.Identity.Infrastructure.Data.IdentityServiceDbContext'.
+MySqlConnector.MySqlException (0x80004005): Table 'riverblog_identity.roles' doesn't exist
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 1081
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 131
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 487
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+MySqlConnector.MySqlException (0x80004005): Table 'riverblog_identity.roles' doesn't exist
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 1081
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 131
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 487
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2026-04-07 22:42:50.208 +08:00 [FTL]  应用程序启动失败!
+MySqlConnector.MySqlException (0x80004005): Table 'riverblog_identity.roles' doesn't exist
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 1081
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 131
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 487
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 350
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.RoleManager`1.RoleExistsAsync(String roleName)
+   at RiverLi.Blog.Identity.Api.SeedData.EnsureSeedData(IServiceProvider serviceProvider) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\SeedData.cs:line 24
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 188
+2026-04-07 22:42:50.211 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:43:59.227 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:43:59.244 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:43:59.288 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:43:59.290 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:50:48.542 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:50:48.560 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:50:48.604 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:50:48.608 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:51:09.449 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:51:09.466 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:51:09.509 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:51:09.511 +08:00 [INF]  应用程序关闭...
+2026-04-07 22:54:20.564 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 22:54:20.581 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 22:54:20.623 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 22:54:20.626 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:00:12.020 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:00:12.037 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:00:12.081 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:00:12.084 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:00:25.111 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:00:25.128 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:00:25.171 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:00:25.174 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:01:51.233 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:01:51.251 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:01:51.298 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 150
+2026-04-07 23:01:51.301 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:01:58.621 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:01:58.638 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:01:58.681 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 150
+2026-04-07 23:01:58.683 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:05:25.597 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:05:25.615 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:05:25.658 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 150
+2026-04-07 23:05:25.660 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:06:23.805 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:06:23.822 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:06:23.866 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 150
+2026-04-07 23:06:23.869 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:06:58.873 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:06:58.890 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:06:58.933 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 150
+2026-04-07 23:06:58.936 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:07:07.622 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:07:07.639 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:07:07.682 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 150
+2026-04-07 23:07:07.685 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:09:32.077 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:09:32.094 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:09:32.137 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:09:32.140 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:10:12.321 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:10:12.338 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:10:12.382 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:10:12.385 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:10:18.863 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:10:18.880 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:10:18.925 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:10:18.928 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:10:31.781 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:10:31.798 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:10:31.841 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:10:31.844 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:11:12.124 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:11:12.141 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:11:12.184 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:11:12.187 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:11:39.505 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:11:39.523 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:11:39.569 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:11:39.571 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:11:59.890 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:11:59.907 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:11:59.950 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:11:59.952 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:12:06.247 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:12:06.264 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:12:06.308 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:12:06.311 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:13:09.276 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:13:09.293 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:13:09.337 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:13:09.340 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:13:16.354 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:13:16.371 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:13:16.415 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:13:16.418 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:13:36.050 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:13:36.067 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:13:36.110 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:13:36.113 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:17:02.865 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:17:02.882 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:17:02.925 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:17:02.928 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:26:43.945 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:26:43.963 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:26:44.007 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:26:44.011 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:27:19.070 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:27:19.087 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:27:19.131 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:27:19.134 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:27:49.017 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:27:49.034 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:27:49.077 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 149
+2026-04-07 23:27:49.079 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:29:20.658 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:29:20.676 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:29:20.719 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:29:20.721 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:29:31.617 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:29:31.634 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:29:31.676 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:29:31.679 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:29:43.036 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:29:43.053 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:29:43.096 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:29:43.099 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:30:04.178 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:30:04.196 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:30:04.244 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:30:04.248 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:30:13.558 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:30:13.576 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:30:13.619 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:30:13.621 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:31:43.040 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:31:43.057 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:31:43.104 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:31:43.107 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:31:54.963 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:31:54.980 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:31:55.022 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:31:55.025 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:33:03.109 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:33:03.126 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:33:03.168 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:33:03.171 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:34:03.664 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:34:03.681 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:34:03.725 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:34:03.728 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:34:20.286 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:34:20.303 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:34:20.346 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:34:20.349 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:36:22.413 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:36:22.430 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:36:22.474 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:36:22.477 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:36:30.417 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:36:30.436 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:36:30.481 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:36:30.484 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:36:53.511 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:36:53.528 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:36:53.572 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:36:53.574 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:37:05.483 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:37:05.501 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:37:05.544 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:37:05.547 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:37:32.066 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:37:32.096 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:37:34.746 +08:00 [INF]  应用程序启动成功!
+2026-04-07 23:37:34.874 +08:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5001
+2026-04-07 23:37:34.878 +08:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-04-07 23:37:34.879 +08:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-04-07 23:37:34.879 +08:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api
+2026-04-07 23:37:39.025 +08:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-04-07 23:37:39.084 +08:00 [WRN] LuckyPennySoftware.MediatR.License You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-04-07 23:37:39.094 +08:00 [DBG] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 查询用户列表，页码：1, 每页数量：2147483647, 关键字：无
+2026-04-07 23:37:39.112 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-04-07 23:37:39.113 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-04-07 23:37:39.156 +08:00 [INF] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 成功获取用户列表，总数：1, 返回：1
+2026-04-07 23:37:45.049 +08:00 [DBG] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 查询用户列表，页码：1, 每页数量：10, 关键字：无
+2026-04-07 23:37:45.087 +08:00 [INF] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 成功获取用户列表，总数：1, 返回：1
+2026-04-07 23:37:55.734 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2026-04-07 23:46:28.518 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:46:28.549 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:46:30.704 +08:00 [INF]  应用程序启动成功!
+2026-04-07 23:46:30.797 +08:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5001
+2026-04-07 23:46:30.801 +08:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-04-07 23:46:30.801 +08:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-04-07 23:46:30.802 +08:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api
+2026-04-07 23:46:46.515 +08:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-04-07 23:46:46.604 +08:00 [WRN] LuckyPennySoftware.MediatR.License You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-04-07 23:47:05.737 +08:00 [DBG] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 查询用户列表，页码：1, 每页数量：10, 关键字：无
+2026-04-07 23:47:05.747 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-04-07 23:47:05.748 +08:00 [WRN] Microsoft.EntityFrameworkCore.Query The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2026-04-07 23:47:05.807 +08:00 [INF] RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers.GetAllUsersQueryHandler 成功获取用户列表，总数：1, 返回：1
+2026-04-07 23:47:20.961 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:47:20.974 +08:00 [INF] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 成功获取用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:51:39.028 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:51:39.047 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:51:39.091 +08:00 [FTL]  应用程序启动失败!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at System.Diagnostics.DiagnosticSource.Write[T](String name, T value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at RiverLi.Blog.Identity.Api.Program.Main(String[] args) in D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api\Program.cs:line 147
+2026-04-07 23:51:39.094 +08:00 [INF]  应用程序关闭...
+2026-04-07 23:52:01.309 +08:00 [INF]  === 应用程序启动 ===
+2026-04-07 23:52:01.341 +08:00 [INF]  正在启动 RiverLi Blog Identity API...
+2026-04-07 23:52:04.191 +08:00 [INF]  应用程序启动成功!
+2026-04-07 23:52:04.287 +08:00 [INF] Microsoft.Hosting.Lifetime Now listening on: http://localhost:5001
+2026-04-07 23:52:04.291 +08:00 [INF] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2026-04-07 23:52:04.292 +08:00 [INF] Microsoft.Hosting.Lifetime Hosting environment: Development
+2026-04-07 23:52:04.292 +08:00 [INF] Microsoft.Hosting.Lifetime Content root path: D:\windows\Desktop\Blog\riverli.blog.services.identity\RiverLi.Blog.Services.Identity\RiverLi.Blog.Services.Identity.Api
+2026-04-07 23:52:04.696 +08:00 [WRN] Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware Failed to determine the https port for redirect.
+2026-04-07 23:52:04.789 +08:00 [WRN] LuckyPennySoftware.MediatR.License You do not have a valid license key for the Lucky Penny software MediatR. This is allowed for development and testing scenarios. If you are running in production you are required to have a licensed version. Please visit https://luckypennysoftware.com to obtain a valid license.
+2026-04-07 23:52:04.799 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:04.804 +08:00 [WRN] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 用户不存在，ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:06.107 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:06.109 +08:00 [WRN] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 用户不存在，ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:28.060 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:28.062 +08:00 [WRN] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 用户不存在，ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:28.762 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:28.764 +08:00 [WRN] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 用户不存在，ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:29.039 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:29.041 +08:00 [WRN] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 用户不存在，ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:29.274 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:29.276 +08:00 [WRN] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 用户不存在，ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:29.535 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:29.537 +08:00 [WRN] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 用户不存在，ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:29.748 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:29.750 +08:00 [WRN] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 用户不存在，ID: "08de94bb-96c2-403a-823c-48dc784b95ea"
+2026-04-07 23:52:32.869 +08:00 [DBG] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 查询用户详情，用户 ID: "08de94bd-9ce1-4407-8bc5-5f52c300340d"
+2026-04-07 23:52:32.880 +08:00 [INF] RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo.GetCurrentUserInfoQueryHandler 成功获取用户详情，用户 ID: "08de94bd-9ce1-4407-8bc5-5f52c300340d"
