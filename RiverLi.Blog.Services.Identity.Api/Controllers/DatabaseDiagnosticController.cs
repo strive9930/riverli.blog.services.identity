@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RiverLi.Blog.Identity.Infrastructure.Data;
-using RiverLi.Blog.Infrastructure.Shared.Controllers;
+//using RiverLi.Blog.Infrastructure.Shared.Controllers;
 
 namespace RiverLi.Blog.Identity.Api.Controllers
 {

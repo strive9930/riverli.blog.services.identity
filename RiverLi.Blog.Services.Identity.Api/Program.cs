@@ -11,10 +11,11 @@ using RiverLi.Blog.Identity.Application.Common.Interfaces;
 using RiverLi.Blog.Identity.Application.Common.Services;
 using RiverLi.Blog.Identity.Application.Users.Commands.User;
 using RiverLi.Blog.Identity.Application.Common.Behaviors;
-using RiverLi.Blog.Infrastructure.Shared.Auth;
+//using RiverLi.Blog.Infrastructure.Shared.Auth;
 using RiverLi.DDD.Core.Application.Common.Interfaces;
 using Scalar.AspNetCore;
 using Serilog;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace RiverLi.Blog.Identity.Api
 {
@@ -113,7 +114,8 @@ namespace RiverLi.Blog.Identity.Api
                 builder.Services.AddScoped<IPermissionCalculator, PermissionCalculator>();
                 builder.Services.AddScoped<ILoginHistoryService, LoginHistoryService>();
                 builder.Services.AddHttpContextAccessor();
-                builder.Services.AddScoped<RiverLi.DDD.Core.Application.Common.Interfaces.ICurrentUser, CurrentUser>();
+                // TODO: 实现 CurrentUser 类或从其他包引入
+                // builder.Services.AddScoped<RiverLi.DDD.Core.Application.Common.Interfaces.ICurrentUser, CurrentUser>();
                 
                 // 3.1 配置JWT认证
                 builder.Services.AddAuthentication(options =>
@@ -169,11 +171,29 @@ namespace RiverLi.Blog.Identity.Api
                     });
                 }
 
-                // 自动迁移数据库 (可选，生产环境请谨慎开启)
+                // 自动迁移数据库 (可选,生产环境请谨慎开启)
                 using (var scope = app.Services.CreateScope())
                 {
                     var db = scope.ServiceProvider.GetRequiredService<IdentityServiceDbContext>();
-                    db.Database.Migrate();
+                    try
+                    {
+                        // 检查是否有待应用的迁移
+                        var pendingMigrations = db.Database.GetPendingMigrations();
+                        if (pendingMigrations.Any())
+                        {
+                            Log.Information("应用数据库迁移...");
+                            db.Database.Migrate();
+                            Log.Information("数据库迁移完成");
+                        }
+                        else
+                        {
+                            Log.Information("数据库已是最新版本");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warning(ex, "数据库迁移失败，但应用程序将继续运行");
+                    }
                 }
 
                 app.UseHttpsRedirection();

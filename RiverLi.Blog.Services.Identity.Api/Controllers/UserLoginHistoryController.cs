@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RiverLi.Blog.Identity.Application.Users.Commands.User;
 using RiverLi.DDD.Core.Application.Common.Models;
-using RiverLi.Blog.Infrastructure.Shared.Controllers;
+//using RiverLi.Blog.Infrastructure.Shared.Controllers;
 
 namespace RiverLi.Blog.Identity.Api.Controllers
 {
