@@ -3,7 +3,7 @@ using MediatR;
 using RiverLi.Blog.Identity.Application.Auth.Commands.Register;
 using RiverLi.Blog.Identity.Application.Auth.Commands.Login;
 using RiverLi.Blog.Identity.Application.Auth.Queries.GetCurrentUserInfo;
-//using RiverLi.Blog.Infrastructure.Shared.Controllers;
+using RiverLi.Blog.Infrastructure.Shared.Controllers;
 
 namespace RiverLi.Blog.Identity.Api.Controllers
 {

@@ -32,10 +32,14 @@
     <!-- 保留主要的 Swagger 包 -->
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\riverli.blog.infrastructure.shared\RiverLi.Blog.Infrastructure.Shared.csproj" />
     <ProjectReference Include="..\RiverLi.Blog.Identity.Application\RiverLi.Blog.Identity.Application.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="DATABASE_UPDATE_INSTRUCTIONS.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Controllers\BaseApiController.cs" />
   </ItemGroup>
 
 </Project>

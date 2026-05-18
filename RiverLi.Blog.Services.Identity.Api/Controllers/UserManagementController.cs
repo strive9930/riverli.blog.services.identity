@@ -6,7 +6,7 @@ using RiverLi.Blog.Identity.Application.Users.Queries.GetAllUsers;
 using RiverLi.Blog.Identity.Application.Users.Queries.GetUserById;
 using RiverLi.Blog.Identity.Application.Users.Queries.GetUserRoles;
 using RiverLi.Blog.Identity.Application.Permissions.Commands;
-//using RiverLi.Blog.Infrastructure.Shared.Controllers;
+using RiverLi.Blog.Infrastructure.Shared.Controllers;
 
 namespace RiverLi.Blog.Identity.Api.Controllers;
 
