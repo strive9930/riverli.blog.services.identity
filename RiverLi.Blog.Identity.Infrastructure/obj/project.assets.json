@@ -4729,23 +4729,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\River\\.nuget\\packages\\": {},
-    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\1003499\\.nuget\\packages\\": {},
+    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\windows\\Desktop\\BlogGithub\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Infrastructure\\RiverLi.Blog.Identity.Infrastructure.csproj",
+      "projectUniqueName": "D:\\RiderProjects\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Infrastructure\\RiverLi.Blog.Identity.Infrastructure.csproj",
       "projectName": "RiverLi.Blog.Identity.Infrastructure",
-      "projectPath": "D:\\windows\\Desktop\\BlogGithub\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Infrastructure\\RiverLi.Blog.Identity.Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\River\\.nuget\\packages\\",
-      "outputPath": "D:\\windows\\Desktop\\BlogGithub\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Infrastructure\\obj\\",
+      "projectPath": "D:\\RiderProjects\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Infrastructure\\RiverLi.Blog.Identity.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\1003499\\.nuget\\packages\\",
+      "outputPath": "D:\\RiderProjects\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\River\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "D:\\RiderProjects\\riverli.blog.services.identity\\NuGet.Config",
+        "C:\\Users\\1003499\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4754,14 +4757,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "http://192.168.18.193:8081/repository/nuget-group/index.json": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\windows\\Desktop\\BlogGithub\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Domain\\RiverLi.Blog.Identity.Domain.csproj": {
-              "projectPath": "D:\\windows\\Desktop\\BlogGithub\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Domain\\RiverLi.Blog.Identity.Domain.csproj"
+            "D:\\RiderProjects\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Domain\\RiverLi.Blog.Identity.Domain.csproj": {
+              "projectPath": "D:\\RiderProjects\\riverli.blog.services.identity\\RiverLi.Blog.Identity.Domain\\RiverLi.Blog.Identity.Domain.csproj"
             }
           }
         }
@@ -4829,15 +4833,15 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[9.0.13, 9.0.13]"
+            "version": "[9.0.12, 9.0.12]"
           },
           {
             "name": "Microsoft.NETCore.App.Ref",
-            "version": "[9.0.13, 9.0.13]"
+            "version": "[9.0.12, 9.0.12]"
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[9.0.13, 9.0.13]"
+            "version": "[9.0.12, 9.0.12]"
           }
         ],
         "frameworkReferences": {
@@ -4845,7 +4849,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

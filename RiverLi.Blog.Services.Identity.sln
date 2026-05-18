@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.Blog.Identity.Appli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.Blog.Identity.Api", "RiverLi.Blog.Services.Identity.Api\RiverLi.Blog.Identity.Api.csproj", "{B3DB7733-6FB9-0A19-8987-CE8DDA2B4B5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.Blog.Infrastructure.Shared", "..\..\riverli.blog.infrastructure.shared\RiverLi.Blog.Infrastructure.Shared\RiverLi.Blog.Infrastructure.Shared.csproj", "{0F2557F6-F173-459F-B333-397FDE48156E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.Blog.Infrastructure.Shared", "..\riverli.blog.infrastructure.shared\RiverLi.Blog.Infrastructure.Shared.csproj", "{264EA951-87D1-482F-805E-1E4E6D7C9155}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.DDD.Core", "..\..\riverli.-ddd.-core\RiverLi.DDD.Core\RiverLi.DDD.Core.csproj", "{3FFB522B-BEA3-461D-A7FB-43FA49324578}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RiverLi.DDD.Core", "..\riverli.ddd.core\RiverLi.DDD.Core.csproj", "{DF89BB2F-A027-4838-A04E-193BD4052CDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,14 @@ Global
 		{B3DB7733-6FB9-0A19-8987-CE8DDA2B4B5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3DB7733-6FB9-0A19-8987-CE8DDA2B4B5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3DB7733-6FB9-0A19-8987-CE8DDA2B4B5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F2557F6-F173-459F-B333-397FDE48156E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F2557F6-F173-459F-B333-397FDE48156E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F2557F6-F173-459F-B333-397FDE48156E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F2557F6-F173-459F-B333-397FDE48156E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FFB522B-BEA3-461D-A7FB-43FA49324578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FFB522B-BEA3-461D-A7FB-43FA49324578}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FFB522B-BEA3-461D-A7FB-43FA49324578}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FFB522B-BEA3-461D-A7FB-43FA49324578}.Release|Any CPU.Build.0 = Release|Any CPU
+		{264EA951-87D1-482F-805E-1E4E6D7C9155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{264EA951-87D1-482F-805E-1E4E6D7C9155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{264EA951-87D1-482F-805E-1E4E6D7C9155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{264EA951-87D1-482F-805E-1E4E6D7C9155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF89BB2F-A027-4838-A04E-193BD4052CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF89BB2F-A027-4838-A04E-193BD4052CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF89BB2F-A027-4838-A04E-193BD4052CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF89BB2F-A027-4838-A04E-193BD4052CDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
