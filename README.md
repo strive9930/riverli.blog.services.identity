@@ -194,29 +194,100 @@ dotnet run --project RiverLi.Blog.Identity.Api/RiverLi.Blog.Identity.Api.csproj
 #### 用户登录
 
 ```http
-POST /api/v1/auth/login
+POST /api/auth/login
 Content-Type: application/json
 
 Request:
 {
-  "username": "admin",
+  "email": "admin@example.com",
   "password": "admin123"
 }
 
 Response 200:
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "expiresIn": 3600,
-  "user": {
-    "id": 1,
-    "username": "admin",
-    "email": "admin@example.com",
-    "roles": ["Administrator"],
-    "permissions": ["admin:*"]
-  }
+  "expiration": "2026-05-18T12:00:00Z",
+  "userId": "00000000-0000-0000-0000-000000000001",
+  "username": "admin",
+  "nickname": "管理员",
+  "email": "admin@example.com",
+  "avatar": "https://...",
+  "isAdmin": true,
+  "createdAt": "2026-01-01T00:00:00Z",
+  "roles": [
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "name": "Admin",
+      "code": "ADMIN",
+      "description": "系统管理员"
+    }
+  ],
+  "permissions": [
+    "users.view",
+    "users.create",
+    "users.edit",
+    "users.delete",
+    "roles.view",
+    "roles.create",
+    "roles.edit",
+    "roles.delete",
+    "permissions.view",
+    "menus.view",
+    "dashboard.view"
+  ],
+  "menus": [
+    {
+      "id": "menu-id-1",
+      "name": "Dashboard",
+      "title": "仪表盘",
+      "path": "/dashboard",
+      "icon": "el-icon-house",
+      "sort": 1,
+      "requiredPermission": "dashboard.view",
+      "children": []
+    },
+    {
+      "id": "menu-id-2",
+      "name": "SystemManagement",
+      "title": "系统管理",
+      "path": "/system",
+      "icon": "el-icon-setting",
+      "sort": 2,
+      "requiredPermission": null,
+      "children": [
+        {
+          "id": "menu-id-3",
+          "name": "UserManagement",
+          "title": "用户管理",
+          "path": "/system/users",
+          "icon": "el-icon-user",
+          "sort": 1,
+          "requiredPermission": "users.view",
+          "children": []
+        },
+        {
+          "id": "menu-id-4",
+          "name": "RoleManagement",
+          "title": "角色管理",
+          "path": "/system/roles",
+          "icon": "el-icon-user-filled",
+          "sort": 2,
+          "requiredPermission": "roles.view",
+          "children": []
+        }
+      ]
+    }
+  ]
 }
 ```
+
+**说明：**
+- 登录成功后一次性返回所有必要信息，无需额外请求
+- `token`: JWT 访问令牌，用于后续 API 请求的认证
+- `roles`: 用户的角色列表
+- `permissions`: 用户的权限码列表，用于前端按钮级权限控制
+- `menus`: 用户的菜单树（仅包含后台管理菜单），用于动态生成路由和侧边栏
+- `isAdmin`: 是否为管理员标识
 
 #### 用户注册
 
