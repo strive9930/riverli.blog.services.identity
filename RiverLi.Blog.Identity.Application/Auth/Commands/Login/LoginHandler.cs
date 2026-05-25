@@ -60,6 +60,7 @@ namespace RiverLi.Blog.Identity.Application.Auth.Commands.Login
 
             // 3. 获取用户角色（用于放入 JWT Claim）
             var roles = await _userManager.GetRolesAsync(user);
+            
             // 4. 获取这些角色对应的所有权限代码 (关键步骤)
             //通过 EF Core 联表查询 ApplicationRole -> Permissions
             var permissions = await _context.Roles
@@ -68,18 +69,50 @@ namespace RiverLi.Blog.Identity.Application.Auth.Commands.Login
                 .Select(p => p.Code)
                 .Distinct()
                 .ToListAsync(cancellationToken);
-            // 4. 生成 JWT Token
+            
+            // 5. 生成 JWT Token
             var token = _tokenService.GenerateToken(user, roles);
             var expiration = DateTime.Now.AddMinutes(60); // 需与 JwtTokenService 中逻辑一致
 
-            // 5. 记录成功的登录历史
+            // 6. 构建角色信息列表
+            var roleInfos = await _context.Roles
+                .Where(r => roles.Contains(r.Name!))
+                .Select(r => new RoleInfo
+                {
+                    Id = r.Id,
+                    Name = r.Name ?? string.Empty,
+                    Code = r.Code ?? string.Empty,
+                    Description = r.Description
+                })
+                .ToListAsync(cancellationToken);
+            
+            // 7. 判断是否为管理员
+            bool isAdmin = roles.Any(r => r == "Admin" || r == "Administrator");
+            
+            // 8. 获取用户的菜单树（仅后台管理菜单）
+            var menus = await GetUserAdminMenus(user.Id, permissions, isAdmin, cancellationToken);
+
+            // 9. 记录成功的登录历史
             await RecordSuccessfulLogin(user.Id, token);
 
-            return Result<AuthResponse>.SuccessResult(new AuthResponse(
-                token,
-                expiration,
-                user.Id,
-                user.NickName));
+            // 10. 构建完整的响应对象
+            var response = new AuthResponse
+            {
+                Token = token,
+                Expiration = expiration,
+                UserId = user.Id,
+                Nickname = user.NickName,
+                Username = user.UserName ?? string.Empty,
+                Email = user.Email,
+                Avatar = user.AvatarUrl,
+                Roles = roleInfos,
+                Permissions = permissions.ToList(),
+                Menus = menus,
+                IsAdmin = isAdmin,
+                CreatedAt = user.CreateTime
+            };
+
+            return Result<AuthResponse>.SuccessResult(response);
         }
 
         private async Task RecordSuccessfulLogin(Guid userId, string token)
@@ -144,6 +177,77 @@ namespace RiverLi.Blog.Identity.Application.Auth.Commands.Login
             }
 
             return context.Connection.RemoteIpAddress?.ToString() ?? "Unknown IP";
+        }
+
+        /// <summary>
+        /// 获取用户的后台管理菜单树
+        /// </summary>
+        private async Task<List<MenuTreeItem>> GetUserAdminMenus(Guid userId, List<string> permissions, bool isAdmin, CancellationToken cancellationToken)
+        {
+            try
+            {
+                // 获取所有启用的菜单
+                var allMenus = await _context.Menus
+                    .Where(m => m.IsEnabled && m.IsVisible)
+                    .OrderBy(m => m.Sort)
+                    .ToListAsync(cancellationToken);
+
+                // 根据权限和角色过滤菜单
+                var filteredMenus = allMenus.Where(m =>
+                {
+                    // 如果没有 RequiredPermission，所有人都可以访问
+                    if (string.IsNullOrEmpty(m.RequiredPermission))
+                    {
+                        return true;
+                    }
+
+                    // 如果是后台管理菜单（通过 TargetAudience 判断），只有管理员可以访问
+                    bool isAdminMenu = m.TargetAudience == RiverLi.Blog.Identity.Domain.Entities.MenuTarget.Admin;
+                    if (isAdminMenu && !isAdmin)
+                    {
+                        return false;
+                    }
+                    
+                    // 检查是否有对应权限
+                    return permissions.Contains(m.RequiredPermission);
+                }).ToList();
+
+                // 构建树形结构
+                return BuildMenuTree(filteredMenus, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"获取用户菜单失败：{ex.Message}");
+                return new List<MenuTreeItem>();
+            }
+        }
+
+        /// <summary>
+        /// 构建菜单树形结构
+        /// </summary>
+        private List<MenuTreeItem> BuildMenuTree(List<RiverLi.Blog.Identity.Domain.Entities.Menu> menus, Guid? parentId)
+        {
+            var parentMenus = menus.Where(m => m.ParentId == parentId).ToList();
+            var result = new List<MenuTreeItem>();
+
+            foreach (var menu in parentMenus)
+            {
+                var menuItem = new MenuTreeItem
+                {
+                    Id = menu.Id.ToString(),
+                    Name = menu.Name,
+                    Title = menu.Title,
+                    Path = menu.Path ?? string.Empty,
+                    Icon = menu.Icon,
+                    Sort = menu.Sort,
+                    RequiredPermission = menu.RequiredPermission,
+                    Children = BuildMenuTree(menus, menu.Id)
+                };
+
+                result.Add(menuItem);
+            }
+
+            return result;
         }
     }
 }

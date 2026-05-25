@@ -114,8 +114,9 @@ namespace RiverLi.Blog.Identity.Api
                 builder.Services.AddScoped<IPermissionCalculator, PermissionCalculator>();
                 builder.Services.AddScoped<ILoginHistoryService, LoginHistoryService>();
                 builder.Services.AddHttpContextAccessor();
-                // TODO: 实现 CurrentUser 类或从其他包引入
-                // builder.Services.AddScoped<RiverLi.DDD.Core.Application.Common.Interfaces.ICurrentUser, CurrentUser>();
+                
+                // 注册 CurrentUser 服务（用于获取当前用户信息）
+                builder.Services.AddScoped<RiverLi.DDD.Core.Application.Common.Interfaces.ICurrentUser, RiverLi.Blog.Infrastructure.Shared.Auth.CurrentUser>();
                 
                 // 3.1 配置JWT认证
                 builder.Services.AddAuthentication(options =>
