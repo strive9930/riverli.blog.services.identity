@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using riverli.blog.services.identity.Domain.Entities;
 using riverli.blog.services.identity.Domain.Enums;
 
@@ -16,6 +17,20 @@ public static class DbSeeder
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>()
+            .CreateLogger("IdentityDbSeeder");
+
+        try
+        {
+            logger.LogInformation("正在迁移身份认证服务数据库...");
+            await dbContext.Database.MigrateAsync();
+            logger.LogInformation("身份认证服务数据库迁移完成");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "身份认证服务数据库迁移失败");
+            throw;
+        }
 
         // 1. 创建超级管理员角色
         const string adminRoleName = "Admin";
