@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <!-- ⚠️ 原为 ProjectReference(绝对路径 ..\..\..\..\RiderProjects\riverli.blog.infrastructure.shared)，为兼容 Docker 构建改为 NuGet 包引用 -->
+    <PackageReference Include="RiverLi.Blog.Infrastructure.Shared" Version="1.0.3" />
+    <!-- 以下为解决方案内项目引用，Docker 构建时需一并 COPY 其 .csproj -->
+    <ProjectReference Include="..\riverli.blog.services.identity.Domain\riverli.blog.services.identity.Domain.csproj" />
+    <ProjectReference Include="..\riverli.blog.services.identity.Application\riverli.blog.services.identity.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.12" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.18.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

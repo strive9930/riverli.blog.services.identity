@@ -1,0 +1,6 @@
+@riverli.blog.services.identity.Api_HostAddress = http://localhost:5216
+
+GET {{riverli.blog.services.identity.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
